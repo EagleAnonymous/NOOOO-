@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>no!</title>
+    <link rel="icon" href="img/network.gif" type="gif">
+
+    <style>
+        /* General body styling for centering the content */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white; /* Set default text color for new elements */
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden; /* Hide overflow */
+        }
+
+        /* Style for the background video */
+        #bg-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -2; /* Place it behind everything */
+            object-fit: cover; /* Cover the entire screen */
+        }
+
+        /* Add a dark overlay to ensure text is readable */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Black with 50% opacity */
+            z-index: -1; /* Position it above the video but behind the content */
+        }
+
+        /* The main container for the video placeholder */
+        .video-placeholder {
+            width: 90%;
+            max-width: 720px;
+            /* Maintain a 16:9 aspect ratio */
+            aspect-ratio: 16 / 9;
+            
+            background-color: #ff0000;
+            border-radius: 12px;
+            
+            /* Center content using Flexbox */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            
+            padding: 20px;
+            box-sizing: border-box;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            color: white;
+        }
+
+        /* Container for the play button for styling and hover effects */
+        .play-button-container {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%; /* Makes it a circle */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Hover effect for the play button */
+        .play-button-container:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        /* The triangle "play" icon created with CSS borders */
+        .play-icon {
+            width: 0;
+            height: 0;
+            /* Creates a triangle pointing right */
+            border-top: 18px solid transparent;
+            border-bottom: 18px solid transparent;
+            border-left: 28px solid white;
+            /* Small adjustment to center the triangle visually */
+            margin-left: 8px;
+        }
+
+        /* Styling for the text below the play button */
+        .video-title {
+            margin-top: 24px;
+            font-size: 1.5em;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        /* Styling for the text on top */
+        .top-text {
+            /* Hacker Text Style */
+            font-family: 'Courier New', Courier, monospace; /* Monospaced font */
+            color: #0f0; /* Bright green color */
+            text-shadow:
+                0 0 5px #0f0,
+                0 0 10px #0f0,
+                0 0 20px #0f0,
+                0 0 40px #0f0,
+                0 0 80px #0f0;
+
+            font-size: 4em;
+            font-weight: bold;
+            margin-bottom: 32px;
+            text-align: center;
+            
+            /* Animation */
+            /* Make it a block to use full width for animation */
+            display: block;
+            width: 100%;
+            white-space: nowrap; /* Prevent text from wrapping */
+            animation: marquee 15s linear infinite;
+        }
+
+        /* Styling for the text at the bottom */
+        .bottom-text {
+            font-size: 1em;
+            margin-top: 32px;
+            text-align: center;
+
+            /* Neon Effect */
+            color: #fff;
+            text-shadow:
+                0 0 7px #fff,
+                0 0 10px #fff,
+                0 0 21px #fff,
+                0 0 42px #f80000,
+                0 0 82px #f80000,
+                0 0 92px #f80000,
+                0 0 102px #f80000,
+                0 0 151px #f80000;
+        }
+
+        /* Media query for smaller screens */
+        @media (max-width: 480px) {
+            .play-button-container {
+                width: 60px;
+                height: 60px;
+            }
+
+            .play-icon {
+                border-top-width: 14px;
+                border-bottom-width: 14px;
+                border-left-width: 22px;
+            }
+
+            .video-title {
+                font-size: 1.2em;
+            }
+
+            .top-text {
+                font-size: 2.8em;
+            }
+
+            .bottom-text {
+                margin-top: 24px;
+            }
+        }
+
+        /* Keyframes for the slide-in animation */
+        @keyframes marquee {
+            from {
+                transform: translateX(100%); /* Start off-screen to the right */
+            }
+            to {
+                transform: translateX(-100%); /* End off-screen to the left */
+            }
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop id="bg-video">
+        <source src="img\glitch background - Yury Zaytsev (1080p, h264).mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
+
+    <h1 class="top-text">KINDLY PLAY THE VIDEO</h1>
+    <div class="video-placeholder">
+        <!-- Custom Play Button -->
+        <div class="play-button-container" id="play-button">
+            <div class="play-icon"></div>
+        </div>
+        <p class="video-title">PLAY</p>
+        <!-- The video is initially hidden and will be shown via JavaScript -->
+        <video id="main-video" style="width: 100%; height: 100%; border-radius: 12px; display: none;">
+            <source src="img\111.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <p class="bottom-text">IF YOU WATCH THE VIDEO, YOUR DEVICE WILL GO CRAZY</p>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const playButton = document.getElementById('play-button');
+            const video = document.getElementById('main-video');
+
+            playButton.addEventListener('click', () => {
+                // Hide the play button
+                playButton.style.display = 'none';
+                // Hide the title inside the placeholder
+                const videoTitle = document.querySelector('.video-title');
+                videoTitle.style.display = 'none';
+
+                // Show the video
+                video.style.display = 'block';
+
+                // Play the video at full volume
+                video.volume = 1.0;
+                video.play();
+            });
+
+            // Add an event listener for when the video finishes playing
+            video.addEventListener('ended', () => {
+                // Hide the video
+                video.style.display = 'none';
+
+                // Show the play button again
+                playButton.style.display = 'flex'; 
+
+                // Show the title again
+                const videoTitle = document.querySelector('.video-title');
+                videoTitle.style.display = 'block';
+
+            });
+        });
+    </script>
+</body>
+</html>
